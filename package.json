@@ -1,0 +1,11 @@
+{ 
+  "name": "appkit",
+  "description": "Extensions for building applications using Spine.js",
+  "version": "1.0.0",
+  "author": "Vojto Rinik <vojto@rinik.net>",
+  "main" : "./index.js",
+  "dependencies" : {
+    "spine": "1.0.6",
+    "haml-coffee": "0.5.5"
+  }
+}

@@ -1,0 +1,3 @@
+%ul.list
+  - for item, i in @items
+    %li{:"data-index" => i}= if @method then item[@method] else item.name

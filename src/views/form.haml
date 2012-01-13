@@ -1,0 +1,6 @@
+%form
+  - for field, label of @fields
+    .form-row
+      %input{:type => @types[field], :placeholder => label, :name => field, :autocapitalize => "off"}
+  .form-row
+    %input{:type => "submit"}
