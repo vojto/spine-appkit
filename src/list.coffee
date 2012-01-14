@@ -5,28 +5,25 @@ Views = require('./views')
 # =============================================================================
 
 class List extends Controller
+  tag: 'ul'
+  className: 'list'
+  
   template: Views.list
   events:
     'touchstart li': 'touchstart'
     'touchend li': 'touchend'
     'tap li': 'tap'
   
-  constructor: (options = {}) ->
+  constructor: ->
     super
-    options ||= {}
-    @setModel(options.model) if options.model?
-    @delegate = options.delegate
-  
-  setModel: (model) ->
-    # TODO: Unbind from previous model
-    @model = model
-    @model.bind('refresh change', @render) if @model.bind?
-    @model.model.bind('refresh change', @render) if @model.model && @model.model.bind?
+    @items = []
+    @model.bind('refresh', @refresh)
+    @el.addClass(@type) if @type?
     @render()
   
-  render: =>
+  refresh: =>
     @items = @model.all()
-    super
+    @render()
     
   # Touch events
   
