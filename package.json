@@ -6,6 +6,7 @@
   "main" : "./index.js",
   "dependencies" : {
     "spine": "1.0.6",
-    "haml-coffee": "0.5.5"
+    "haml-coffee": "0.5.5",
+    "coffee-script": "1.2.0"
   }
 }

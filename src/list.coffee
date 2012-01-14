@@ -11,9 +11,10 @@ class List extends Controller
     'touchend li': 'touchend'
     'tap li': 'tap'
   
-  constructor: (options) ->
+  constructor: (options = {}) ->
     super
-    @setModel(options.model) if options.model
+    options ||= {}
+    @setModel(options.model) if options.model?
     @delegate = options.delegate
   
   setModel: (model) ->
