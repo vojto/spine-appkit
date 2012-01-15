@@ -28,8 +28,8 @@ class List extends Controller
   # Touch events
   
   tap: (e) ->
-    index = $(e.target).attr("data-index")
-    item = @items[index]
+    index = @$("> li").index($(e.target))
+    item = @items[index]    
     @delegate.didSelect(item)
   
   touchstart: (e) ->
