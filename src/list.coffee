@@ -16,13 +16,13 @@ class List extends Controller
   
   constructor: ->
     super
-    @items = []
-    @model.bind('refresh', @refresh)
+    @items or= []
+    @model.bind('refresh', @refresh) if @model
     @el.addClass(@type) if @type?
     @render()
   
   refresh: =>
-    @items = @model.all()
+    @items = @model.all() if @model
     @render()
     
   # Touch events
