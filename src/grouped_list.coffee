@@ -10,6 +10,7 @@ class GroupedList extends Controller
   # lists to be displayed as groups.
   constructor: ->
     super
+    @el.addClass(@type) if @type
     @render()
   
   render: ->

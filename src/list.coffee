@@ -23,7 +23,6 @@ class List extends Controller
   
   refresh: =>
     @items = @model.all() if @model
-    console.log "Refreshed with #{@items.length} items:", @items
     @render()
     
   # Touch events
