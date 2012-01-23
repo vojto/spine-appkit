@@ -11,9 +11,6 @@ class Form extends Controller
   template: Views.form
   tag: "form"
   
-  events:
-    "submit form": "didSubmit"
-  
   constructor: ->
     super
     @object or= {}
@@ -21,12 +18,19 @@ class Form extends Controller
     for field, label of @fields
       @types[field] or= "text"
     @render()
+    
+  render: ->
+    super
+    @el.live "submit", @didSubmit
   
-  didSubmit: (e) ->
+  didSubmit: (e) =>
     e.preventDefault()
-    data = @el.find("form").serializeArray()
+    data = @el.serializeArray()
     @object[d.name] = d.value for d in data
     @delegate.didSubmit(@object)
+  
+  submit: ->
+    @el.trigger('submit')
 
 
 module.exports = Form
