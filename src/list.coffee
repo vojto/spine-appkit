@@ -19,7 +19,7 @@ class List extends Controller
     @items or= []
     @model.bind('refresh', @refresh) if @model
     @el.addClass(@type) if @type?
-    @render()
+    @refresh()
   
   refresh: =>
     @items = @model.all() if @model

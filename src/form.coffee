@@ -9,6 +9,7 @@ Views      = require('./views')
 ##
 class Form extends Controller
   template: Views.form
+  tag: "form"
   
   events:
     "submit form": "didSubmit"
