@@ -12,7 +12,7 @@ class List extends Controller
   events:
     'touchstart li': 'touchstart'
     'touchend li': 'touchend'
-    'tap li': 'tap'
+    'click li': 'didClick'
   
   constructor: ->
     super
@@ -23,12 +23,15 @@ class List extends Controller
     @refresh()
   
   refresh: =>
-    @items = @model.all() if @model
+    if @model
+      @items = if @predicate then @model.select(@predicate) else @model.all()
+    if @sort
+      @items = @items.sort(@sort)
     @render()
     
   # Touch events
   
-  tap: (e) ->
+  didClick: (e) ->
     index = @$("> li").index($(e.target))
     item = @items[index]    
     @delegate.didSelect(item)
