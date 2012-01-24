@@ -32,7 +32,9 @@ class List extends Controller
   # Touch events
   
   didClick: (e) ->
-    index = @$("> li").index($(e.target))
+    li = $(e.target)
+    li = li.parent() if li.get(0).tagName == "DIV"
+    index = @$("> .inside > li").index(li)
     item = @items[index]    
     @delegate.didSelect(item)
   

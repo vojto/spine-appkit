@@ -1,2 +1,4 @@
-- for item, i in @items
-  %li= if @method then item[@method] else item.name
+.inside
+  - for item, i in @items
+    %li{:class => "#{if @itemClass then @itemClass(item) else ''}"}
+      .inside= if @method then item[@method] else item.name
