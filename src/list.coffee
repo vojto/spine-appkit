@@ -18,6 +18,7 @@ class List extends Controller
     super
     @items or= []
     @model.bind('refresh', @refresh) if @model
+    @model.bind('change', @refresh) if @model
     @el.addClass(@type) if @type?
     @refresh()
   
