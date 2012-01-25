@@ -7,8 +7,7 @@ Views = require('./views')
 class List extends Controller
   tag: 'ul'
   className: 'list'
-  
-  template: Views.list
+
   events:
     'touchstart li': 'touchstart'
     'touchend li': 'touchend'
@@ -29,14 +28,24 @@ class List extends Controller
       @items = @items.sort(@sort)
     @render()
     
+  render: ->
+    @el.empty()
+    inside = $("<div class='inside' />")
+    @el.append(inside)
+    for item in @items
+      itemView = $(Views.list_item({list: @, item: item}))
+      inside.append(itemView)
   # Touch events
   
-  didClick: (e) ->
-    li = $(e.target)
-    li = li.parent() if li.get(0).tagName == "DIV"
+  didClick: (e) =>
+    target = $(e.target)
+    li = if target.get(0).tagName == "LI" then target else target.parent()
     index = @$("> .inside > li").index(li)
     item = @items[index]    
-    @delegate.didSelect(item)
+    if target.hasClass("accessory")
+      @delegate.didSelectAccessory(item)
+    else
+      @delegate.didSelect(item)
   
   touchstart: (e) ->
     $(e.target).addClass('touch')
