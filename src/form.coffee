@@ -31,6 +31,10 @@ class Form extends Controller
   
   submit: ->
     @el.trigger('submit')
+  
+  setValues: (values) ->
+    for key, value of values
+      @el.find("[name=#{key}]").val(value)
 
 
 module.exports = Form
