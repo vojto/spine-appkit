@@ -32,6 +32,9 @@ class Form extends Controller
   submit: ->
     @el.trigger('submit')
   
+  reset: ->
+    @el.find("input, textarea").val('')
+  
   setValues: (values) ->
     for key, value of values
       @el.find("[name=#{key}]").val(value)

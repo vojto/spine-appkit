@@ -19,6 +19,8 @@ class List extends Controller
     @model.bind('refresh', @refresh) if @model
     @model.bind('change', @refresh) if @model
     @el.addClass(@type) if @type?
+    @inside = $("<div class='inside' />")
+    @el.append(@inside)
     @refresh()
   
   refresh: =>
@@ -29,23 +31,30 @@ class List extends Controller
     @render()
     
   render: ->
-    @el.empty()
-    inside = $("<div class='inside' />")
-    @el.append(inside)
-    for item in @items
-      itemView = $(Views.list_item({list: @, item: item}))
-      inside.append(itemView)
-  # Touch events
+    @inside.empty()
+    for item, index in @items
+      itemView = $(Views.list_item({list: @, item: item, index: index}))
+      @inside.append(itemView)
   
   didClick: (e) =>
     target = $(e.target)
-    li = if target.get(0).tagName == "LI" then target else target.parent()
-    index = @$("> .inside > li").index(li)
-    item = @items[index]    
+    item = @itemForTarget(target)
     if target.hasClass("accessory")
       @delegate.didSelectAccessory(item)
     else
       @delegate.didSelect(item)
+  
+  indexForTarget: (target) ->
+    target = $(target)
+    li = if target.get(0).tagName == "LI" then target else target.parents("li:first")
+    @inside.children().index(li)
+  
+  itemAtIndex: (domIndex) ->
+    index = $(@inside.children().get(domIndex)).attr("data-index")
+    @items[index]
+  
+  itemForTarget: (target) ->
+    @itemAtIndex(@indexForTarget(target))
   
   touchstart: (e) ->
     $(e.target).addClass('touch')
