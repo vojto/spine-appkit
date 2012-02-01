@@ -3,3 +3,4 @@ module.exports =
   List: require('./list')
   GroupedList: require('./grouped_list')
   Form: require('./form')
+  ButtonSet: require('./button_set')
