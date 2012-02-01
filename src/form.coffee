@@ -18,6 +18,7 @@ class Form extends Controller
     for field, label of @fields
       @types[field] or= "text"
     @render()
+    @buttons = @$(".form-row.buttons")
     
   render: ->
     super
