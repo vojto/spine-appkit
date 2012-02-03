@@ -28,13 +28,14 @@ class Form extends Controller
     e.preventDefault()
     data = @el.serializeArray()
     @object[d.name] = d.value for d in data
-    @delegate.didSubmit(@object)
+    @delegate.didSubmit(@object) if @delegate?
+    @object
   
   submit: ->
     @el.trigger('submit')
   
   reset: ->
-    @el.find("input, textarea").val('')
+    @el.find("input[type=text], textarea").val('')
   
   setValues: (values) ->
     for key, value of values

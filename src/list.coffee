@@ -39,7 +39,8 @@ class List extends Controller
     for item, index in @items
       itemView = $(Views.list_item({list: @, item: item, index: index}))
       @inside.append(itemView)
-  
+    @trigger('didRender')
+
   didClick: (e) =>
     target = $(e.target)
     item = @itemForTarget(target)
