@@ -39,6 +39,9 @@ class Form extends Controller
   setValues: (values) ->
     for key, value of values
       @el.find("[name=#{key}]").val(value)
+  
+  classes: (field) ->
+    "#{field} #{@types[field]}"
 
 
 module.exports = Form

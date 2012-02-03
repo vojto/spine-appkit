@@ -1,6 +1,6 @@
 .inside
   - for field, label of @fields
-    .form-row{:class => @types[field]}
+    .form-row{:class => @classes(field)}
       - if @types[field] == "textarea"
         %textarea{:placeholder => label, :name => field}
       - else

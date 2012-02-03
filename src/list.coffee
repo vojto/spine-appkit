@@ -21,6 +21,7 @@ class List extends Controller
     @el.addClass(@type) if @type?
     @inside = $("<div class='inside' />")
     @el.append(@inside)
+    @selectionIndex = -1
     @refresh()
   
   refresh: =>
@@ -29,6 +30,9 @@ class List extends Controller
     if @sort
       @items = @items.sort(@sort)
     @render()
+    if @selectionIndex != -1
+      @$('li').removeClass('active')
+      @elementAtIndex(@selectionIndex).addClass('active')
     
   render: ->
     @inside.empty()
@@ -40,9 +44,9 @@ class List extends Controller
     target = $(e.target)
     item = @itemForTarget(target)
     if target.hasClass("accessory")
-      @delegate.didSelectAccessory(item)
+      @delegate.didSelectAccessory(item, @)
     else
-      @delegate.didSelect(item)
+      @delegate.didSelect(item, @)
   
   indexForTarget: (target) ->
     target = $(target)
@@ -55,6 +59,9 @@ class List extends Controller
   
   itemForTarget: (target) ->
     @itemAtIndex(@indexForTarget(target))
+  
+  elementAtIndex: (index) ->
+    @inside.find("li[data-index=#{index}]")
   
   touchstart: (e) ->
     $(e.target).addClass('touch')
