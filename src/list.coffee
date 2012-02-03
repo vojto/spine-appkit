@@ -7,6 +7,7 @@ Views = require('./views')
 class List extends Controller
   tag: 'ul'
   className: 'list'
+  itemView: Views.list_item
 
   events:
     'touchstart li': 'touchstart'
@@ -37,7 +38,7 @@ class List extends Controller
   render: ->
     @inside.empty()
     for item, index in @items
-      itemView = $(Views.list_item({list: @, item: item, index: index}))
+      itemView = $(@itemView({list: @, item: item, index: index}))
       @inside.append(itemView)
     @trigger('didRender')
 
