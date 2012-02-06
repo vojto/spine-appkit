@@ -13,7 +13,7 @@ class List extends Controller
     'touchstart li': 'touchstart'
     'touchend li': 'touchend'
     'click li': 'didClick'
-  
+
   constructor: ->
     super
     @items or= []
@@ -70,5 +70,7 @@ class List extends Controller
   
   touchend: (e) ->
     $(e.target).removeClass('touch')
+  
+  itemClass: -> ''
 
 module.exports = List
