@@ -20,10 +20,10 @@ class Form extends Controller
       @types[field] or= "text"
     @render()
     @buttons = @$(".form-row.buttons")
+    @el.live "submit", @didSubmit
     
   render: ->
     super
-    @el.live "submit", @didSubmit
   
   didSubmit: (e) =>
     e.preventDefault()
