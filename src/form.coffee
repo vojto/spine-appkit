@@ -21,6 +21,7 @@ class Form extends Controller
     @render()
     @buttons = @$(".form-row.buttons")
     @el.live "submit", @didSubmit
+    @el.hide() if @hidden
     
   render: ->
     super
