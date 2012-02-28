@@ -18,7 +18,7 @@ class List extends Controller
     super
     @items or= []
     @model.bind('refresh', @refresh) if @model
-    @model.bind('change', @refresh) if @model
+    @model.bind('create', @refresh) if @model
     @el.addClass(@type) if @type?
     @inside = $("<div class='inside' />")
     @el.append(@inside)
@@ -26,20 +26,22 @@ class List extends Controller
     @refresh()
   
   refresh: =>
-    if @model
-      @items = if @predicate then @model.select(@predicate) else @model.all()
-    if @sort
-      @items = @items.sort(@sort)
+    @items = @findItems() if @model
     @render()
     if @selectionIndex != -1
       @$('li').removeClass('active')
       @elementAtIndex(@selectionIndex).addClass('active')
+  
+  findItems: ->
+    items = if @predicate then @model.select(@predicate) else @model.all()
+    items.sort(@sort) if @sort
+    items
     
   render: ->
     @inside.empty()
     for item, index in @items
-      itemView = $(@itemView({list: @, item: item, index: index}))
-      @inside.append(itemView)
+      item = new ListItem(list: @, item: item, index: index, template: @itemView)
+      @inside.append(item.el)
     @trigger('didRender')
 
   didClick: (e) =>
@@ -72,5 +74,18 @@ class List extends Controller
     $(e.target).removeClass('touch')
   
   itemClass: -> ''
+
+class ListItem extends Controller
+  tag: 'li'
+  
+  constructor: ->
+    super
+    @item.bind('change', @render)
+    @render()
+  
+  render: =>
+    @el.addClass(@list.itemClass(@item))
+    @el.attr('data-index', @index)
+    super
 
 module.exports = List
