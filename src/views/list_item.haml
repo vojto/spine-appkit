@@ -1,4 +1,3 @@
-%li{:class => "#{@list.itemClass(@item)}", :"data-index" => @index}
-  - if @list.accessory?
-    .accessory
-  .inside= if @list.method then @item[@list.method] else @item.name
+- if @list.accessory?
+  .accessory
+.inside= if @list.method then @item[@list.method] else @item.name
