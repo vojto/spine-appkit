@@ -1,5 +1,6 @@
-Controller = require('./controller')
-Views = require('./views')
+Controller  = require('./controller')
+Views       = require('./views')
+Util        = require('./util')
 
 # List displays contents of a model in a HTML list
 # =============================================================================
@@ -28,9 +29,7 @@ class List extends Controller
   refresh: =>
     @items = @findItems() if @model
     @render()
-    if @selectionIndex != -1
-      @$('li').removeClass('active')
-      @elementAtIndex(@selectionIndex).addClass('active')
+    @selectAtIndex(@selectionIndex) if @selectionIndex != -1
   
   findItems: ->
     items = if @predicate then @model.select(@predicate) else @model.all()
@@ -74,9 +73,23 @@ class List extends Controller
     $(e.target).removeClass('touch')
   
   itemClass: -> ''
+  
+  # Handling selection
+  
+  selectAtIndex: (index) ->
+    @$('li').removeClass('active')
+    @elementAtIndex(index).addClass('active')
+  
+  selectItem: (item) ->
+    if typeof item.eql == 'function'
+      index = Util.indexOfEql(@items, item)
+    else
+      index = @items.indexOf(item)
+    @selectAtIndex(index)
+    
 
 class ListItem extends Controller
-  tag: 'li'
+  tag: "li"
   
   constructor: ->
     super
