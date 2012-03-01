@@ -29,7 +29,7 @@ class List extends Controller
   refresh: =>
     @items = @findItems() if @model
     @render()
-    @selectAtIndex(@selectionIndex) if @selectionIndex != -1
+    @reselect()
   
   findItems: ->
     items = if @predicate then @model.select(@predicate) else @model.all()
@@ -87,6 +87,9 @@ class List extends Controller
     else
       index = @items.indexOf(item)
     @selectAtIndex(index)
+  
+  reselect: ->
+    @selectAtIndex(@selectionIndex) if @selectionIndex != -1
     
 
 class ListItem extends Controller
@@ -99,8 +102,11 @@ class ListItem extends Controller
     @render()
   
   render: =>
+    @el.removeClass().addClass(@className)
     @el.addClass(@list.itemClass(@item))
     @el.attr('data-index', @index)
     super
+    @list.trigger('didRender')
+    # @list.reselect()
 
 module.exports = List
