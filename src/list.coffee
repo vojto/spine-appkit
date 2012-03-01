@@ -78,7 +78,7 @@ class List extends Controller
   
   selectAtIndex: (index) ->
     @selectionIndex = index
-    @$('li').removeClass('active')
+    @$('li.list-item').removeClass('active')
     @elementAtIndex(index).addClass('active')
   
   selectItem: (item) ->
