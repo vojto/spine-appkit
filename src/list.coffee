@@ -53,7 +53,7 @@ class List extends Controller
   
   indexForTarget: (target) ->
     target = $(target)
-    li = if target.get(0).tagName == "LI" then target else target.parents("li:first")
+    li = if target.is('li.list-item') then target else target.parents("li.list-item:first")
     @inside.children().index(li)
   
   itemAtIndex: (domIndex) ->
@@ -77,6 +77,7 @@ class List extends Controller
   # Handling selection
   
   selectAtIndex: (index) ->
+    @selectionIndex = index
     @$('li').removeClass('active')
     @elementAtIndex(index).addClass('active')
   
@@ -90,6 +91,7 @@ class List extends Controller
 
 class ListItem extends Controller
   tag: "li"
+  className: "list-item"
   
   constructor: ->
     super
