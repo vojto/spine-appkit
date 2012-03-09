@@ -93,6 +93,9 @@ class List extends Controller
   
   reselect: ->
     @selectAtIndex(@selectionIndex) if @selectionIndex != -1
+  
+  deselect: ->
+    @selectAtIndex(-1)
     
 
 class ListItem extends Controller
