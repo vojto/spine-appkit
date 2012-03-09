@@ -104,7 +104,7 @@ class ListItem extends Controller
 
   constructor: ->
     super
-    @item.bind('change', @render)
+    @item.bind('change', @render) if @item.bind?
     @render()
   
   render: =>
