@@ -32,10 +32,13 @@ class List extends Controller
     @reselect()
   
   findItems: ->
-    items = if @predicate then @model.select(@predicate) else @model.all()
+    items = if @predicate then @findWithPredicate() else @model.all()
     items.sort(@sort) if @sort
     items
-    
+  
+  findWithPredicate: ->
+    @model.select(@predicate)
+
   render: ->
     @inside.empty()
     for item, index in @items
@@ -95,7 +98,7 @@ class List extends Controller
 class ListItem extends Controller
   tag: "li"
   className: "list-item"
-  
+
   constructor: ->
     super
     @item.bind('change', @render)
@@ -107,6 +110,6 @@ class ListItem extends Controller
     @el.attr('data-index', @index)
     super
     @list.trigger('didRender')
-    # @list.reselect()
+    @list.reselect()
 
 module.exports = List

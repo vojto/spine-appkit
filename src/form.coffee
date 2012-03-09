@@ -38,6 +38,7 @@ class Form extends Controller
   
   reset: ->
     @el.find("input[type=text], textarea").val('')
+    
   
   setValues: (values) ->
     for key, value of values
